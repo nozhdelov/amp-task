@@ -37,9 +37,9 @@ class CollectPrices implements ShouldQueue
     public function handle()
     {
 
-        $response = \Illuminate\Support\Facades\Http::post(self::SERVICE_URL . '/' . $this->symbol, [])->json();
+        $response = \Illuminate\Support\Facades\Http::get(self::SERVICE_URL . '/' . $this->symbol, [])->json();
         if(!$response){
-            throw new \Eception('Invalid Response');
+            throw new \Exception('Invalid Response');
         }
         if(array_key_exists('message', $response)){
             throw new \Exception($response['message']);
@@ -54,7 +54,7 @@ class CollectPrices implements ShouldQueue
         $pricePoint->volume = doubleval($response['volume']);
         
         $pricePoint->save();
-        
+       
         $notifications = \App\Models\NotificationSetting::where('price', '<=', $pricePoint->last_price)->with('user')->get();
         \App\Jobs\SendNotifications::dispatch($pricePoint, $notifications)->onQueue('notifications');
         
