@@ -2,7 +2,7 @@
 -
 Clone the git repo form github
 
-    git clone git@github.com:nozhdelov/amp-task.git
+    git clone https://github.com/nozhdelov/amp-task.git
 
 Use composer to install the dependencies 
 
@@ -16,7 +16,7 @@ Build the static resources
 
     npm run build
 
-Create an empty database and fill its credentials in the .env file
+Create an empty database and fill its credentials in the .env file. 
 Optionally use the log mail handler  MAIL_MAILER=log
 
  Run the migrations
