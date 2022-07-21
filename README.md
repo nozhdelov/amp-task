@@ -10,7 +10,7 @@ Use composer to install the dependencies
 
 Use npm to install the node packages 
 
-    node install
+    npm install
 
 Build the static resources
 
