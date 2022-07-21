@@ -11,6 +11,8 @@ class Notifications extends Controller
         $email = $request->get('email', '');
         $price = $request->get('price', '');
         
+        $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+        
         if(empty($email)){
             return $response->setData(['status' => 0, 'message' => 'Invalid Email']);
         }

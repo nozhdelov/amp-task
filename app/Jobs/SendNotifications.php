@@ -15,14 +15,16 @@ class SendNotifications implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $pricePoint;
+    protected $notifications;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(\App\Models\PricePoint $pricePoint)
+    public function __construct(\App\Models\PricePoint $pricePoint, \Illuminate\Support\Collection $notifications)
     {
         $this->pricePoint = $pricePoint;
+        $this->notifications = $notifications;
     }
 
     /**
@@ -33,9 +35,7 @@ class SendNotifications implements ShouldQueue
     public function handle()
     {
         
-        $notifications = \App\Models\NotificationSetting::where('price', '<=', $this->pricePoint->last_price)->with('user')->get();
-        
-        foreach($notifications as $notification){
+        foreach($this->notifications as $notification){
             Mail::to($notification->user->email)->send(new \App\Mail\PriceChanged($this->pricePoint->last_price));
             
         }

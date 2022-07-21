@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new \App\Jobs\CollectPrices('BTCUSD'))->everyMinute();
+        $schedule->job(new \App\Jobs\CollectPrices('BTCUSD'))->hourly();
     }
 
     /**
